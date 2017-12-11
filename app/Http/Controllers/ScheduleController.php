@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ScheduleRequest;
 use App\Http\Resources\Schedule as ScheduleResource;
 use App\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
 
 class ScheduleController extends Controller
@@ -12,11 +14,15 @@ class ScheduleController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response|AnonymousResourceCollection
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $schedules =  ScheduleResource::collection(Schedule::where('user_id', Auth::id())->get());
+        if ($request->ajax()) {
+            return $schedules;
+        }
+        return view('schedule.index', ['schedules' => $schedules]);
     }
 
     /**
@@ -26,18 +32,23 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-        //
+        return view('schedule.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\ScheduleRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ScheduleRequest $request)
     {
-        //
+        $schedule = new Schedule();
+        $schedule->name = $request->input('name');
+        $schedule->user()->associate(Auth::user());
+        $schedule->save();
+
+        return redirect('/schedules');
     }
 
     /**
@@ -62,19 +73,28 @@ class ScheduleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $schedule = new ScheduleResource(Schedule::where([
+            ['id', $id,],
+            ['user_id', Auth::id()],
+        ])->first());
+
+        return view('schedule.edit', ['schedule' => $schedule]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\ScheduleRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ScheduleRequest $request, $id)
     {
-        //
+        $schedule = Schedule::find($id);
+        $schedule->name = $request->input('name');
+        $schedule->save();
+
+        return redirect('/schedules');
     }
 
     /**

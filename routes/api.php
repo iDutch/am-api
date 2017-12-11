@@ -26,4 +26,17 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/schedules/{id}', 'ScheduleController@show')->where([
         'id' => '[0-9]+',
     ]);
+
+
+    Route::get('/schedules', 'ScheduleController@index')->name('schedule.index');
+    Route::prefix('schedule')->group(function () {
+        Route::get('/create', 'ScheduleController@create')->name('schedule.create');
+        Route::post('/store', 'ScheduleController@store');
+        Route::get('/edit/{id}', 'ScheduleController@edit')->where(['id' => '[0-9]+'])->name('schedule.edit');
+        Route::get('/{id}/entries', 'EntryController@index')->where(['id' => '[0-9]+'])->name('schedule.entries');
+        Route::get('/{schedule_id}/entry/create', 'EntryController@create')->where(['schedule_id' => '[0-9]+'])->name('entry.create');
+        Route::post('/{schedule_id}/entry/', 'ScheduleController@store')->where(['schedule_id' => '[0-9]+'])->name('entry.store');
+        Route::get('/{schedule_id}/entry/edit/{id}', 'EntryController@edit')->where(['schedule_id' => '[0-9]+', 'id' => '[0-9]+'])->name('entry.edit');
+    });
+
 });

@@ -3,16 +3,30 @@
 @section('content')
 <div class="container">
     <div class="row">
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Dashboard</div>
-
+                <div class="panel-heading">Devices</div>
                 <div class="panel-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
+                    <div class="panel panel-default col-md-6">
+                        <div class="panel-heading">Aquarium Lights</div>
+                        <div class="panel-body">
+                            Active Schedule: <select class="form-control coll-md-" name="schedule">
+                                <option value="1">Default</option>
+                            </select><br>
+
+                            Time: 19:43
                         </div>
-                    @endif
+                    </div>
+                    <div class="panel panel-default col-md-6">
+                        <div class="panel-heading">Aquarium Lights</div>
+                        <div class="panel-body">
+                            Active Schedule: <select class="form-control coll-md-" name="schedule">
+                                <option value="1">Default</option>
+                            </select><br>
+
+                            Time: 19:43
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

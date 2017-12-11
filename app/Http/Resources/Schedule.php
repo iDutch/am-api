@@ -15,6 +15,7 @@ class Schedule extends Resource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'name' => $this->name,
             'entries' => Entry::collection($this->entries),
         ];

@@ -15,6 +15,8 @@ window.axios.defaults.headers.common = {
 };
 
 
+
+
 axios.get('/api/user')
     .then(response => {
         console.log(response.data);
