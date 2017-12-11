@@ -11,13 +11,23 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->middleware(['auth']);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/', function () {
+        return view('welcome');
+    });
+    Route::get('/home', 'HomeController@index')->name('home');
+});
+
+
+
+
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+
 Route::get('/redirect', function () {
     $query = http_build_query([
         'client_id' => 'client-id',

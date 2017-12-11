@@ -7,31 +7,20 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+var axios = require('axios');
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+window.axios.defaults.headers.common = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+};
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
-Vue.component(
-    'passport-clients',
-    require('./components/passport/Clients.vue')
-);
+axios.get('/api/user')
+    .then(response => {
+        console.log(response.data);
+    });
 
-Vue.component(
-    'passport-authorized-clients',
-    require('./components/passport/AuthorizedClients.vue')
-);
-
-Vue.component(
-    'passport-personal-access-tokens',
-    require('./components/passport/PersonalAccessTokens.vue')
-);
-
-const app = new Vue({
-    el: '#app'
-});
+axios.get('/api/schedules')
+    .then(response => {
+        console.log(response.data);
+    });
