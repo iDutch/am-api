@@ -18,9 +18,9 @@ class ScheduleController extends Controller
      */
     public function index(Request $request)
     {
-        $schedules =  ScheduleResource::collection(Schedule::where('user_id', Auth::id())->get());
+        $schedules =  Schedule::where('user_id', Auth::id())->get();
         if ($request->ajax()) {
-            return $schedules;
+            return ScheduleResource::collection($schedules);
         }
         return view('schedule.index', ['schedules' => $schedules]);
     }
@@ -48,16 +48,17 @@ class ScheduleController extends Controller
         $schedule->user()->associate(Auth::user());
         $schedule->save();
 
-        return redirect('/schedules');
+        return redirect(route('schedule.index'));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param   ScheduleRequest $request
+     * @param   int $id
      * @return ScheduleResource
      */
-    public function show($id)
+    public function show(ScheduleRequest $request, $id)
     {
         return new ScheduleResource(Schedule::where([
             ['id', $id,],
@@ -68,15 +69,13 @@ class ScheduleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
+     * @param  ScheduleRequest  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(ScheduleRequest $request, $id)
     {
-        $schedule = new ScheduleResource(Schedule::where([
-            ['id', $id,],
-            ['user_id', Auth::id()],
-        ])->first());
+        $schedule = new ScheduleResource(Schedule::where('id', $id)->first());
 
         return view('schedule.edit', ['schedule' => $schedule]);
     }
@@ -94,7 +93,7 @@ class ScheduleController extends Controller
         $schedule->name = $request->input('name');
         $schedule->save();
 
-        return redirect('/schedules');
+        return redirect(route('schedule.index'));
     }
 
     /**

@@ -17,13 +17,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/schedules', 'ScheduleController@index')->name('schedule.index');
     Route::prefix('schedule')->group(function () {
         Route::get('/create', 'ScheduleController@create')->name('schedule.create');
-        Route::post('/store', 'ScheduleController@store');
+        Route::post('/', 'ScheduleController@store')->name('schedule.store');
         Route::get('/edit/{id}', 'ScheduleController@edit')->where(['id' => '[0-9]+'])->name('schedule.edit');
-        Route::post('/update/{id}', 'ScheduleController@update')->where(['id' => '[0-9]+'])->name('schedule.update');
+        Route::patch('/update/{id}', 'ScheduleController@update')->where(['id' => '[0-9]+'])->name('schedule.update');
         Route::get('/{id}/entries', 'EntryController@index')->where(['id' => '[0-9]+'])->name('schedule.entries');
         Route::get('/{schedule_id}/entry/create', 'EntryController@create')->where(['schedule_id' => '[0-9]+'])->name('entry.create');
         Route::post('/{schedule_id}/entry/', 'ScheduleController@store')->where(['schedule_id' => '[0-9]+'])->name('entry.store');
         Route::get('/{schedule_id}/entry/edit/{id}', 'EntryController@edit')->where(['schedule_id' => '[0-9]+', 'id' => '[0-9]+'])->name('entry.edit');
+        Route::patch('/{schedule_id}/entry/update/{id}', 'EntryController@update')->where(['schedule_id' => '[0-9]+', 'id' => '[0-9]+'])->name('entry.update');
     });
 });
 

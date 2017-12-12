@@ -30,5 +30,8 @@
         "vue-loader": "^13.5.0",
         "vue-template-compiler": "^2.5.9",
         "webpack": "^3.9.1"
+    },
+    "dependencies": {
+        "bootstrap-slider": "^10.0.0"
     }
 }

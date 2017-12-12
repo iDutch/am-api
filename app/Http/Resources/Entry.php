@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\Resource;
 
 class Entry extends Resource
@@ -15,7 +16,7 @@ class Entry extends Resource
     public function toArray($request)
     {
         return [
-            'time' => $this->time,
+            'time' => 1,
             'colors' => [
                 'red' => $this->red,
                 'green' => $this->green,

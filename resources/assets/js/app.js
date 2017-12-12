@@ -8,21 +8,9 @@
 require('./bootstrap');
 
 var axios = require('axios');
+var slider = require("bootstrap-slider");
 
 window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest',
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
 };
-
-
-
-
-axios.get('/api/user')
-    .then(response => {
-        console.log(response.data);
-    });
-
-axios.get('/api/schedules')
-    .then(response => {
-        console.log(response.data);
-    });
