@@ -17,7 +17,7 @@ class CrossbarClient extends Resource
         return [
             'id' => $this->id,
             'username' => $this->username,
-            'password' => $this->password,
+            'password' => $this->client_key,
             'role' => 'user',
         ];
     }

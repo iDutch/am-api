@@ -33,3 +33,39 @@
     </div>
 </div>
 @endsection
+@section('scripts')
+    <script>
+
+        let user = 'App';
+        let key = '$10$sosd/4AgLn8ltzBxrYQDaeWLl6IA5EVcMozMeoXxk4klYrD18QSUa';
+
+        // This challenge callback will authenticate our frontend component
+        function onchallenge (session, method, extra) {
+            console.log("onchallenge", method, extra);
+            if (method === "wampcra") {
+                console.log("authenticating via '" + method + "' and challenge '" + extra.challenge + "'");
+                return autobahn.auth_cra.sign(key, extra.challenge);
+            } else {
+                throw "don't know how to authenticate using '" + method + "'";
+            }
+        }
+
+        let connection = new window.autobahn.Connection({
+            url: 'ws://cb.hoogstraaten.eu/ws',
+            realm: 'eu.hoogstraaten.fishtank',
+            authid: user,
+            authmethods: ["wampcra"],
+            onchallenge: onchallenge
+        });
+
+        connection.onopen = function (session) {
+            console.log("frontend connected");
+        };
+
+        connection.onclose = function (reason, details) {
+            console.log("Connection lost:", reason, details);
+        };
+
+        connection.open();
+    </script>
+@endsection

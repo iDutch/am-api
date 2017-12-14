@@ -7,8 +7,9 @@
 
 require('./bootstrap');
 
-var axios = require('axios');
-var slider = require("bootstrap-slider");
+window.axios = require('axios');
+window.slider = require('bootstrap-slider');
+window.autobahn = require('autobahn');
 
 window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest',
