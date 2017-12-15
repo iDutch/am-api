@@ -187,15 +187,5 @@
                 return value + '%';
             }
         });
-
-        axios.get('/api/user')
-            .then(response => {
-                console.log(response.data);
-            });
-
-        axios.get('/api/schedules')
-            .then(response => {
-                console.log(response.data);
-            });
     </script>
 @endsection

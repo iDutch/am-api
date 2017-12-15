@@ -29,6 +29,9 @@
                                         <a class="btn btn-default" href="{{ route('schedule.edit', ['id' => $schedule->id]) }}">
                                             Edit
                                         </a>
+                                        <a class="delete btn btn-danger" href="#" data-id="{{ $schedule->id }}">
+                                            Delete
+                                        </a>
                                     </td>
                                 </tr>
                             @endforeach
@@ -48,4 +51,15 @@
         </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+    <script>
+        $('.delete').on('click', function (e) {
+            e.preventDefault();
+            window.axios.delete('{{ route('schedule.delete') }}', {"params": {"id": $(this).data('id')}})
+                .then(function () {
+                    window.location.href = '{{ route('schedule.index') }}';
+                });
+        });
+    </script>
 @endsection
