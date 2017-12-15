@@ -33,6 +33,15 @@
                                 </tr>
                             @endforeach
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <a class="btn btn-success" href="{{ route('schedule.create') }}">
+                                        Add schedule
+                                    </a>
+                                </td>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Create schedule</div>
+                <div class="panel-heading">Edit entry</div>
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{ route('entry.update', ['schedule_id' => $schedule_id, 'id' => $entry->id]) }}">
                         {{ csrf_field() }}
@@ -148,7 +148,7 @@
                                     Save
                                 </button>
 
-                                <a class="btn btn-default" href="{{ route('schedule.index') }}">
+                                <a class="btn btn-default" href="{{ route('schedule.entries', ['schedule_id' => $schedule_id]) }}">
                                     Cancel
                                 </a>
                             </div>

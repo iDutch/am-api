@@ -37,7 +37,7 @@
     <script>
 
         let user = 'App';
-        let key = '$10$sosd/4AgLn8ltzBxrYQDaeWLl6IA5EVcMozMeoXxk4klYrD18QSUa';
+        let key = '789d0977830cb074909aebbd281845d65ca3b8052510911c73d317f5ab9c036a';
 
         // This challenge callback will authenticate our frontend component
         function onchallenge (session, method, extra) {

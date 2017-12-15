@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
-                <div class="panel-heading">Create schedule</div>
+                <div class="panel-heading">Edit schedule</div>
                 <div class="panel-body">
                     <form class="form-horizontal" method="POST" action="{{ route('schedule.update', ['id' => $schedule->id]) }}">
                         {{ csrf_field() }}
