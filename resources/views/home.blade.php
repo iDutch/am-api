@@ -51,7 +51,7 @@
         }
 
         let connection = new window.autobahn.Connection({
-            url: 'ws://cb.hoogstraaten.eu/ws',
+            url: 'wss://cb.hoogstraaten.eu/ws',
             realm: 'eu.hoogstraaten.fishtank',
             authid: user,
             authmethods: ["wampcra"],
