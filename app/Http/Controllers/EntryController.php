@@ -6,7 +6,6 @@ use App\Http\Requests\EntryRequest;
 use App\Http\Resources\Entry as EntryResource;
 use App\Entry;
 use App\Schedule;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
@@ -95,7 +94,7 @@ class EntryController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param   Request $request
+     * @param   EntryRequest $request
      * @param   int     $schedule_id
      * @param   int     $id
      * @return  \Illuminate\Http\Response
@@ -117,11 +116,14 @@ class EntryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param   int     $id
+     * @param   EntryRequest $request
+     * @param   int     $schedule_id
      * @return  \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(EntryRequest $request, $schedule_id)
     {
-        //
+        Entry::destroy($request->input('id'));
+
+        return redirect(route('schedule.entries', ['schedule_id' => $schedule_id]));
     }
 }

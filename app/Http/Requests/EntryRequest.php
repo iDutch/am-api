@@ -22,8 +22,8 @@ class EntryRequest extends FormRequest
             }
             case 'DELETE':
             {
-                $entry = Entry::find($this->route('id'));
-                return $entry && $this->user()->can('view', $entry);
+                $entry = Entry::find($this->input('id'));
+                return $entry && $this->user()->can('delete', $entry);
             }
             case 'POST':
             {
@@ -33,7 +33,7 @@ class EntryRequest extends FormRequest
             case 'PATCH':
             {
                 $entry = Entry::find($this->route('id'));
-                return $entry && $this->user()->can('view', $entry);
+                return $entry && $this->user()->can('update', $entry);
             }
             default:break;
         }
@@ -56,11 +56,11 @@ class EntryRequest extends FormRequest
             {
                 return [
                     'time' => 'required|date_format:H:i',
-                    'red' => 'required|integer',
-                    'green' => 'required|integer',
-                    'blue' => 'required|integer',
-                    'warmwhite' => 'required|integer',
-                    'coldwhite' => 'required|integer',
+                    'red' => 'required|integer|min:0|max:100',
+                    'green' => 'required|integer|min:0|max:100',
+                    'blue' => 'required|integer|min:0|max:100',
+                    'warmwhite' => 'required|integer|min:0|max:100',
+                    'coldwhite' => 'required|integer|min:0|max:100',
                 ];
             }
             case 'PUT':
@@ -68,11 +68,11 @@ class EntryRequest extends FormRequest
             {
                 return [
                     'time' => 'required|date_format:H:i',
-                    'red' => 'required|integer',
-                    'green' => 'required|integer',
-                    'blue' => 'required|integer',
-                    'warmwhite' => 'required|integer',
-                    'coldwhite' => 'required|integer',
+                    'red' => 'required|integer|min:0|max:100',
+                    'green' => 'required|integer|min:0|max:100',
+                    'blue' => 'required|integer|min:0|max:100',
+                    'warmwhite' => 'required|integer|min:0|max:100',
+                    'coldwhite' => 'required|integer|min:0|max:100',
                 ];
             }
             default:break;

@@ -38,7 +38,7 @@
                                         data-slider-value="{{ $entry->red }}"
                                         data-slider-tooltip="show"
                                 >
-                                @if ($errors->has('time'))
+                                @if ($errors->has('red'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('red') }}</strong>
                                     </span>

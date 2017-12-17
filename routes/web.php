@@ -26,6 +26,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/{schedule_id}/entry/', 'EntryController@store')->where(['schedule_id' => '[0-9]+'])->name('entry.store');
         Route::get('/{schedule_id}/entry/edit/{id}', 'EntryController@edit')->where(['schedule_id' => '[0-9]+', 'id' => '[0-9]+'])->name('entry.edit');
         Route::patch('/{schedule_id}/entry/update/{id}', 'EntryController@update')->where(['schedule_id' => '[0-9]+', 'id' => '[0-9]+'])->name('entry.update');
+        Route::delete('/{schedule_id}/entry/', 'EntryController@destroy')->where(['schedule_id' => '[0-9]+'])->name('entry.delete');
     });
 });
 

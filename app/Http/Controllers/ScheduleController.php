@@ -98,13 +98,12 @@ class ScheduleController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  ScheduleRequest  $request
-     * @param   int  $id
      * @return  \Illuminate\Http\Response
      */
     public function destroy(ScheduleRequest $request)
     {
         Schedule::destroy($request->input('id'));
 
-        return response()->json()->setStatusCode(204);
+        return redirect(route('schedule.index'));
     }
 }
