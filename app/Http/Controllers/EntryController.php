@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ScheduleChanged;
 use App\Http\Requests\EntryRequest;
 use App\Http\Resources\Entry as EntryResource;
 use App\Entry;
@@ -62,6 +63,7 @@ class EntryController extends Controller
         $entry->coldwhite = $request->input('coldwhite');
         $entry->schedule()->associate($schedule);
         $entry->save();
+        event(new ScheduleChanged(Schedule::find($schedule_id)));
 
         return redirect(route('schedule.entries', ['schedule_id' => $schedule_id]));
     }
@@ -109,6 +111,7 @@ class EntryController extends Controller
         $entry->warmwhite = $request->input('warmwhite');
         $entry->coldwhite = $request->input('coldwhite');
         $entry->save();
+        event(new ScheduleChanged(Schedule::find($schedule_id)));
 
         return redirect(route('schedule.entries', ['schedule_id' => $schedule_id]));
     }
@@ -123,6 +126,7 @@ class EntryController extends Controller
     public function destroy(EntryRequest $request, $schedule_id)
     {
         Entry::destroy($request->input('id'));
+        event(new ScheduleChanged(Schedule::find($schedule_id)));
 
         return redirect(route('schedule.entries', ['schedule_id' => $schedule_id]));
     }
