@@ -8,7 +8,7 @@ use GuzzleHttp\Client as GuzzleClient;
  * Class Factory
  * @package iDutch\CrossbarHttpBridge\HttpBridge
  */
-class Factory
+class HttpBridge
 {
     /**
      * @param string $protocol
@@ -17,7 +17,7 @@ class Factory
      * @param string $path
      * @param string $key
      * @param string $secret
-     * @param bool|string $hostname
+     * @param null|string $hostname
      * @param bool $ignoreSsl
      * @return Publisher
      */
@@ -31,6 +31,8 @@ class Factory
             $port,
             $path
         );
+
+        //var_dump($config); exit;
         $config['base_uri'] = $config['base_url']; // Guzzle 6 compat
         $config['headers']['Content-Type'] = 'application/json';
         if (null !== $hostname) {
@@ -52,7 +54,7 @@ class Factory
      * @param string $secret
      * @param bool|string $hostname
      * @param bool $ignoreSsl
-     * @return Publisher
+     * @return Caller
      */
     public function createCaller($protocol, $host, $port, $path, $key, $secret, $hostname, $ignoreSsl)
     {

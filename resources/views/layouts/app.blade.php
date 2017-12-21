@@ -29,7 +29,7 @@
                     </button>
 
                     <!-- Branding Image -->
-                    <a class="navbar-brand" href="{{ url('/') }}">
+                    <a class="navbar-brand" href="{{ route('home') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
                 </div>
@@ -37,12 +37,15 @@
                 <div class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('home') }}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('schedule.index') }}">Schedules</a>
-                        </li>
+                        @guest
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('home') }}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('schedule.index') }}">Schedules</a>
+                            </li>
+                        @endguest
                     </ul>
 
                     <!-- Right Side Of Navbar -->

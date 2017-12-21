@@ -82,7 +82,7 @@ class Publisher
         $query['seq'] = $seq;
         $query['timestamp'] = $timestamp;
         if (null !== $this->key && null !== $this->secret) {
-            $nonce = mt_rand(0, pow(2, 53));
+            $nonce = mt_rand(0, -((int) pow(2, (8 * PHP_INT_SIZE) - 1) + 1));
             $signature = hash_hmac(
                 'sha256',
                 $this->key . $timestamp . $seq . $nonce . json_encode($body),

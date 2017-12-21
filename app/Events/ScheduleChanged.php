@@ -20,6 +20,7 @@ class ScheduleChanged
     /**
      * Create a new event instance.
      *
+     * @param Schedule $schedule
      * @return void
      */
     public function __construct(Schedule $schedule)

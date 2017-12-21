@@ -59,11 +59,11 @@
         });
 
         connection.onopen = function (session) {
-            function webhookevent(args) {
-                console.log(JSON.parse(args[0].body));
+            function webhookevent(args, kwargs) {
+                console.log(args, kwargs);
             }
 
-            session.subscribe('eu.hoogstraaten.fishtank.webhook', webhookevent);
+            session.subscribe('eu.hoogstraaten.fishtank.publish', webhookevent);
         };
 
         connection.onclose = function (reason, details) {

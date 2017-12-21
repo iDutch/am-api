@@ -29,15 +29,15 @@ class Caller
         $this->secret = $secret;
     }
     /**
-     * @param $topic string
+     * @param $procedure string
      * @param $args array|null
      * @param $kwargs array|null
      * @return array JSON decoded response
      * @throws \Exception
      */
-    public function call($topic, array $args = null, array $kwargs = null)
+    public function call($procedure, array $args = null, array $kwargs = null)
     {
-        $jsonBody = $this->prepareBody($topic, $args, $kwargs);
+        $jsonBody = $this->prepareBody($procedure, $args, $kwargs);
         try {
             $response = $this->client->post(
                 '',
@@ -82,7 +82,7 @@ class Caller
         $query['seq'] = $seq;
         $query['timestamp'] = $timestamp;
         if (null !== $this->key && null !== $this->secret) {
-            $nonce = mt_rand(0, pow(2, 53));
+            $nonce = mt_rand(0, -((int) pow(2, (8 * PHP_INT_SIZE) - 1) + 1));
             $signature = hash_hmac(
                 'sha256',
                 $this->key . $timestamp . $seq . $nonce . json_encode($body),

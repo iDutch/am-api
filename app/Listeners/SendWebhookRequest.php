@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\ScheduleChanged;
+use iDutch\CrossbarHttpBridge\HttpBridge\HttpBridge;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use GuzzleHttp\Client;
@@ -27,9 +28,9 @@ class SendWebhookRequest
      */
     public function handle(ScheduleChanged $event)
     {
-        $client = new Client(['headers' => ['Content-Type' => 'application/json']]);
-        $response = $client->post('https://cb.hoogstraaten.eu/webhook', ['body' => json_encode([
-            'schedule_id' => $event->schedule->id,
-        ])]);
+        $HttpBridge = new HttpBridge();
+        $publisher = $HttpBridge->createPublisher('https', 'cb.hoogstraaten.eu', 443, '/publish', 'mykey', 'mysecret', null, false);
+
+        $publisher->publish('eu.hoogstraaten.fishtank.publish', [['schedule_id' => $event->schedule->id]]);
     }
 }
