@@ -228,4 +228,9 @@ return [
 
     ],
 
+    'crossbar_http_bridge_publisher_key' => env('CROSSBAR_HTTP_BRIDGE_PUBLISHER_KEY', null),
+    'crossbar_http_bridge_publisher_secret' => env('CROSSBAR_HTTP_BRIDGE_PUBLISHER_SECRET', null),
+    'crossbar_http_bridge_caller_key' => env('CROSSBAR_HTTP_BRIDGE_CALLER_KEY', null),
+    'crossbar_http_bridge_caller_secret' => env('CROSSBAR_HTTP_BRIDGE_CALLER_SECRET', null),
+
 ];

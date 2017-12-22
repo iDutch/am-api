@@ -17,6 +17,7 @@ class Publisher
     private $key;
     /** @var string */
     private $secret;
+
     /**
      * @param Client $client
      * @param $key
@@ -28,6 +29,7 @@ class Publisher
         $this->key = $key;
         $this->secret = $secret;
     }
+
     /**
      * @param $topic string
      * @param $args array|null
@@ -51,6 +53,7 @@ class Publisher
         }
         return json_decode($response->getBody(), true);
     }
+
     /**
      * @param $topic
      * @param $args
@@ -69,6 +72,7 @@ class Publisher
         }
         return $body;
     }
+
     /**
      * @param array $body
      * @return array

@@ -14,7 +14,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         'App\Events\ScheduleChanged' => [
-            'App\Listeners\SendWebhookRequest',
+            'App\Listeners\PublishScheduleChanged',
         ],
     ];
 

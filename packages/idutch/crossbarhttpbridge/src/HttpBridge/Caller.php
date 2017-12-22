@@ -17,6 +17,7 @@ class Caller
     private $key;
     /** @var string */
     private $secret;
+
     /**
      * @param Client $client
      * @param $key
@@ -28,6 +29,7 @@ class Caller
         $this->key = $key;
         $this->secret = $secret;
     }
+
     /**
      * @param $procedure string
      * @param $args array|null
@@ -51,16 +53,17 @@ class Caller
         }
         return json_decode($response->getBody(), true);
     }
+
     /**
-     * @param $topic
+     * @param $procedure
      * @param $args
      * @param $kwargs
      * @return array
      */
-    private function prepareBody($topic, $args, $kwargs)
+    private function prepareBody($procedure, $args, $kwargs)
     {
         $body = [];
-        $body['procedure'] = $topic;
+        $body['procedure'] = $procedure;
         if (null !== $args) {
             $body['args'] = $args;
         }
@@ -69,6 +72,7 @@ class Caller
         }
         return $body;
     }
+
     /**
      * @param array $body
      * @return array
