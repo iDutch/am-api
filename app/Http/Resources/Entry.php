@@ -16,7 +16,7 @@ class Entry extends Resource
     public function toArray($request)
     {
         return [
-            'time' => 1,
+            'time' => $this->time->format('H:i'),
             'colors' => [
                 'red' => $this->red,
                 'green' => $this->green,
