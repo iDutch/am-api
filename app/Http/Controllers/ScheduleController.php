@@ -102,6 +102,7 @@ class ScheduleController extends Controller
      */
     public function destroy(ScheduleRequest $request)
     {
+        var_dump($request->input('id')); exit;
         Schedule::destroy($request->input('id'));
 
         return redirect(route('schedule.index'));
