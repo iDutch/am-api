@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\CrossbarClient;
+use App\Http\Requests\ScheduleRequest;
 use App\Schedule;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\CrossbarClient as CrossbarClientRecource;
@@ -15,8 +16,8 @@ class ApiController extends Controller
         return CrossbarClientRecource::collection(CrossbarClient::where('user_id', Auth::id())->get());
     }
 
-    public function getSchedules()
+    public function getSchedule(ScheduleRequest $request, $id)
     {
-        return ScheduleResource::collection(Schedule::where('user_id', Auth::id())->get());
+        return ScheduleResource::collection(Schedule::find($id));
     }
 }
