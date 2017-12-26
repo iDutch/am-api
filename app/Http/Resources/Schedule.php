@@ -17,7 +17,7 @@ class Schedule extends Resource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'entries' => Entry::collection($this->entries->sortBy('time')),
+            'entries' => Entry::collection($this->entries),
         ];
     }
 }

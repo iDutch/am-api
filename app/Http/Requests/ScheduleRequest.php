@@ -22,8 +22,18 @@ class ScheduleRequest extends FormRequest
             }
             case 'DELETE':
             {
-                $schedule = Schedule::find($this->input('id'));
-                return $schedule && $this->user()->can('delete', $schedule);
+                if (is_array($this->input('id'))) {
+                    foreach ($this->input('id') as $id) {
+                        $schedule = Schedule::find($id);
+                        if (!$schedule || !$this->user()->can('delete', $schedule)) {
+                            return false;
+                        }
+                    }
+                    return true;
+                } else {
+                    $schedule = Schedule::find($this->input('id'));
+                    return $schedule && $this->user()->can('delete', $schedule);
+                }
             }
             case 'POST':
             {

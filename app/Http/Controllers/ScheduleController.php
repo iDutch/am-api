@@ -61,7 +61,11 @@ class ScheduleController extends Controller
      */
     public function show(ScheduleRequest $request, $id)
     {
-        return new ScheduleResource(Schedule::find($id));
+        $schedule = Schedule::with(['entries' => function ($query) {
+            $query->orderBy('time', 'asc');
+        }])->where('id', $id)->first();
+
+        return new ScheduleResource($schedule);
     }
 
     /**
@@ -102,7 +106,6 @@ class ScheduleController extends Controller
      */
     public function destroy(ScheduleRequest $request)
     {
-        var_dump($request->input('id')); exit;
         Schedule::destroy($request->input('id'));
 
         return redirect(route('schedule.index'));
