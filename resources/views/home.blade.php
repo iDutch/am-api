@@ -64,6 +64,7 @@
 
         connection.onopen = function (session) {
             $('.device').each(function () {
+                var time = $(this).find('.time');
                 session.subscribe('eu.hoogstraaten.fishtank.time.'+ $(this).attr('id'), function (args) {
                     var t = window.moment(args[0]);
                     time.html(t.format('HH:mm:ss'));
