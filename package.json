@@ -36,6 +36,7 @@
         "bootstrap-slider": "^10.0.0",
         "graceful-fs": "^4.1.11",
         "gulp": "^3.9.1",
-        "minimatch": "^3.0.4"
+        "minimatch": "^3.0.4",
+        "moment": "^2.20.1"
     }
 }

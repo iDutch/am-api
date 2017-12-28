@@ -8713,3 +8713,9 @@ button.close {
   opacity: 1;
 }
 
+.card {
+  border: 1px solid #d3e0e9;
+  border-radius: 3px;
+  padding: 5px;
+}
+
