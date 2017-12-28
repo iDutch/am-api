@@ -29,8 +29,12 @@ class HomeController extends Controller
 
         $subscription = $Caller->call('wamp.subscription.lookup', ['eu.hoogstraaten.fishtank.publish']);
         $subscribers = $Caller->call('wamp.subscription.list_subscribers', [$subscription['args'][0]]);
-        var_dump($subscribers);
 
-        return view('home');
+        $clients = [];
+        foreach ($subscribers['args'] as $subscriber) {
+            array_push($clients, $Caller->call('wamp.session.get', [$subscriber[0]])['args'][0]);
+        }
+
+        return view('home', ['clients' => $clients]);
     }
 }
