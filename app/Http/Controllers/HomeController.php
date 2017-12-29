@@ -35,10 +35,12 @@ class HomeController extends Controller
         $subscribers = $Caller->call('wamp.subscription.list_subscribers', [$subscription['args'][0]]);
 
         $clients = [];
+        $i = 0;
         foreach ($subscribers['args'] as $subscriber) {
-            array_push($clients, $Caller->call('wamp.session.get', [$subscriber[0]])['args'][0]);
+            $clients[$i] = $Caller->call('wamp.session.get', [$subscriber[0]])['args'][0];
+            $clients[$i]['active_schedule_id'] = $Caller->call('eu.hoogstraaten.fishtank.getactivescheduleid.'. $subscriber[0])['args'][0];
+            $i++;
         }
-
         return view('home', ['clients' => $clients, 'schedules' => $schedules]);
     }
 }

@@ -8,28 +8,43 @@
                 <div class="panel-heading">Devices</div>
                 <div id="devices-container" class="panel-body">
                     @foreach ($clients as $client)
-                        <div id="{{ $client['session'] }}" class="device card col-md-6">
-                            <div class="card-body">
-                                <h4 class="card-title">{{ $client['authid'] }}</h4>
-                                <p class="card-text">
-                                    <select class="form-control coll-md-" name="schedule">
-                                        @foreach($schedules as $schedule)
-                                            <option value="{{ $schedule->id  }}">{{ $schedule->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </p>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default time"></button>
-                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <span class="caret"></span><span class="sr-only">Toggle Dropdown</span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">4x</a></li>
-                                        <li><a href="#">8x</a></li>
-                                        <li><a href="#">16x</a></li>
-                                        <li><a href="#">32x</a></li>
-                                    </ul>
+                        <div id="{{ $client['session'] }}" class="device col-md-6">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">{{ $client['authid'] }}</h3>
                                 </div>
+                                <div class="panel-body">
+                                    <form class="form-horizontal">
+                                        <div class="form-group">
+                                            <label for="schedule" class="col-md-4 control-label">Active Schedule:</label>
+                                            <div class="col-md-8">
+                                                <select class="form-control schedule" name="schedule">
+                                                    @foreach($schedules as $schedule)
+                                                        <option {{ $schedule->id === $client['active_schedule_id'] ? "selected" : "" }} value="{{ $schedule->id  }}">{{ $schedule->name }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="schedule" class="col-md-4 control-label">Time:</label>
+                                            <div class="col-md-8">
+                                                <div class="btn-group">
+                                                    <button disabled type="button" class="btn btn-default time"></button>
+                                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                        <span class="caret"></span><span class="sr-only">Toggle Dropdown</span>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="cycle" data-speed="250" href="#">4x</a></li>
+                                                        <li><a class="cycle" data-speed="125" href="#">8x</a></li>
+                                                        <li><a class="cycle" data-speed="63" href="#">16x</a></li>
+                                                        <li><a class="cycle" data-speed="31" href="#">32x</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
                             </div>
                         </div>
                     @endforeach
@@ -66,8 +81,19 @@
 
         connection.onopen = function (session) {
             $('.device').each(function () {
+                var device_id = $(this).attr('id');
                 var time = $(this).find('.time');
-                session.subscribe('eu.hoogstraaten.fishtank.time.'+ $(this).attr('id'), function (args) {
+                var select = $(this).find('.schedule');
+                var cycle = $(this).find('.cycle');
+                console.log(cycle);
+                cycle.on('click', function (e) {
+                   e.preventDefault();
+                   session.call('eu.hoogstraaten.fishtank.cycleschedule.'+ device_id, [$(this).data('speed')]);
+                });
+                select.on('change', function () {
+                   session.call('eu.hoogstraaten.fishtank.setschedule.'+ device_id, [$(this).val()]);
+                });
+                session.subscribe('eu.hoogstraaten.fishtank.time.'+ device_id, function (args) {
                     var t = window.moment(args[0]);
                     time.html(t.format('HH:mm:ss'));
                 });
