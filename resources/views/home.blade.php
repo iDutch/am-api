@@ -13,7 +13,9 @@
                                 <h4 class="card-title">{{ $client['authid'] }}</h4>
                                 <p class="card-text">
                                     <select class="form-control coll-md-" name="schedule">
-                                        <option value="1">Default</option>
+                                        @foreach($schedules as $schedule)
+                                            <option value="{{ $schedule->id  }}">{{ $schedule->name }}</option>
+                                        @endforeach
                                     </select>
                                 </p>
                                 <div class="btn-group">

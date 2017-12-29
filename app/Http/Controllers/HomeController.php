@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Schedule;
 use iDutch\CrossbarHttpBridge\HttpBridge\HttpBridge;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -24,6 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        $schedules =  Schedule::where('user_id', Auth::id())->get();
+
         $HttpBridge = new HttpBridge();
         $Caller = $HttpBridge->createCaller('https', 'cb.hoogstraaten.eu', 443, '/call', config('app.crossbar_http_bridge_caller_key'), config('app.crossbar_http_bridge_caller_secret'), null, false);
 
@@ -35,6 +39,6 @@ class HomeController extends Controller
             array_push($clients, $Caller->call('wamp.session.get', [$subscriber[0]])['args'][0]);
         }
 
-        return view('home', ['clients' => $clients]);
+        return view('home', ['clients' => $clients, 'schedules' => $schedules]);
     }
 }
