@@ -21,8 +21,8 @@ class Entry extends Resource
                 'red' => $this->red,
                 'green' => $this->green,
                 'blue' => $this->blue,
-                'warmwhite' => $this->warmwhite,
-                'coldwhite' => $this->coldwhite,
+                'wwhite' => $this->warmwhite,
+                'cwhite' => $this->coldwhite,
             ],
         ];
     }
