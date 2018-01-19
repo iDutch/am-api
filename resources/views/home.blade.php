@@ -29,7 +29,7 @@
                                             <label for="schedule" class="col-md-4 control-label">Time:</label>
                                             <div class="col-md-8">
                                                 <div class="btn-group">
-                                                    <button disabled type="button" class="btn btn-default time"></button>
+                                                    <button disabled style="width: 85px;" type="button" class="btn btn-default time"></button>
                                                     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                         <span class="caret"></span><span class="sr-only">Toggle Dropdown</span>
                                                     </button>
