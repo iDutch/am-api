@@ -22,8 +22,18 @@ class EntryRequest extends FormRequest
             }
             case 'DELETE':
             {
-                $entry = Entry::find($this->input('id'));
-                return $entry && $this->user()->can('delete', $entry);
+                if (is_array($this->input('id'))) {
+                    foreach ($this->input('id') as $id) {
+                        $entry = Entry::find($id);
+                        if (!$entry || !$this->user()->can('delete', $entry)) {
+                            return false;
+                        }
+                    }
+                    return true;
+                } else {
+                    $entry = Entry::find($this->input('id'));
+                    return $entry && $this->user()->can('delete', $entry);
+                }
             }
             case 'POST':
             {

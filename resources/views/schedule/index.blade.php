@@ -98,7 +98,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <input type="submit" class="btn btn-danger" value="Delete schedule">
+                        <input type="submit" class="btn btn-danger" value="Delete schedules">
                     </div>
                 </form>
             </div>
@@ -120,9 +120,8 @@
             });
             $('#schedule-ids').val(ids.join());
             $('#deleteMulti').modal({"backdrop": "static"});
-        });
+        }).prop('disabled', true);
 
-        $('#mass-delete').prop('disabled', true);
         $('.check').on('click', function () {
             $('#mass-delete').prop('disabled', true);
             $('.check:checked').each(function () {

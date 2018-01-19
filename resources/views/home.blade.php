@@ -85,7 +85,6 @@
                 var time = $(this).find('.time');
                 var select = $(this).find('.schedule');
                 var cycle = $(this).find('.cycle');
-                console.log(cycle);
                 cycle.on('click', function (e) {
                    e.preventDefault();
                    session.call('eu.hoogstraaten.fishtank.cycleschedule.'+ device_id, [$(this).data('speed')]);
