@@ -30,14 +30,16 @@
                                         type="text"
                                         name="red"
                                         data-slider-id='redSlider'
-                                        data-slider-ticks="[0, 100]"
-                                        data-slider-ticks-labels='["0%", "100%"]'
-                                        data-slider-min="1"
-                                        data-slider-max="100"
+                                        data-slider-ticks="[0, {{ config('app.pwm_range') }}]"
+                                        {{--data-slider-ticks-labels='["0%", "100%"]'--}}
+                                        data-slider-min="0"
+                                        data-slider-max="{{ config('app.pwm_range') }}"
                                         data-slider-step="1"
                                         data-slider-value="{{ old('red') }}"
                                         data-slider-tooltip="show"
                                 >
+                                <span class="pull-left">0%</span>
+                                <span class="pull-right">100%</span>
                                 @if ($errors->has('red'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('red') }}</strong>
@@ -54,14 +56,16 @@
                                         type="text"
                                         name="green"
                                         data-slider-id='greenSlider'
-                                        data-slider-ticks="[0, 100]"
-                                        data-slider-ticks-labels='["0%", "100%"]'
-                                        data-slider-min="1"
-                                        data-slider-max="100"
+                                        data-slider-ticks="[0, {{ config('app.pwm_range') }}]"
+                                        {{--data-slider-ticks-labels='["0%", "100%"]'--}}
+                                        data-slider-min="0"
+                                        data-slider-max="{{ config('app.pwm_range') }}"
                                         data-slider-step="1"
                                         data-slider-value="{{ old('green') }}"
                                         data-slider-tooltip="show"
                                 >
+                                <span class="pull-left">0%</span>
+                                <span class="pull-right">100%</span>
                                 @if ($errors->has('green'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('green') }}</strong>
@@ -78,14 +82,16 @@
                                         type="text"
                                         name="blue"
                                         data-slider-id='blueSlider'
-                                        data-slider-ticks="[0, 100]"
-                                        data-slider-ticks-labels='["0%", "100%"]'
-                                        data-slider-min="1"
-                                        data-slider-max="100"
+                                        data-slider-ticks="[0, {{ config('app.pwm_range') }}]"
+                                        {{--data-slider-ticks-labels='["0%", "100%"]'--}}
+                                        data-slider-min="0"
+                                        data-slider-max="{{ config('app.pwm_range') }}"
                                         data-slider-step="1"
                                         data-slider-value="{{ old('blue') }}"
                                         data-slider-tooltip="show"
                                 >
+                                <span class="pull-left">0%</span>
+                                <span class="pull-right">100%</span>
                                 @if ($errors->has('blue'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('blue') }}</strong>
@@ -102,14 +108,16 @@
                                         type="text"
                                         name="warmwhite"
                                         data-slider-id='warmwhiteSlider'
-                                        data-slider-ticks="[0, 100]"
-                                        data-slider-ticks-labels='["0%", "100%"]'
-                                        data-slider-min="1"
-                                        data-slider-max="100"
+                                        data-slider-ticks="[0, {{ config('app.pwm_range') }}]"
+                                        {{--data-slider-ticks-labels='["0%", "100%"]'--}}
+                                        data-slider-min="0"
+                                        data-slider-max="{{ config('app.pwm_range') }}"
                                         data-slider-step="1"
                                         data-slider-value="{{ old('warmwhite') }}"
                                         data-slider-tooltip="show"
                                 >
+                                <span class="pull-left">0%</span>
+                                <span class="pull-right">100%</span>
                                 @if ($errors->has('time'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('warmwhite') }}</strong>
@@ -126,14 +134,16 @@
                                         type="text"
                                         name="coldwhite"
                                         data-slider-id='coldwhiteSlider'
-                                        data-slider-ticks="[0, 100]"
-                                        data-slider-ticks-labels='["0%", "100%"]'
-                                        data-slider-min="1"
-                                        data-slider-max="100"
+                                        data-slider-ticks="[0, {{ config('app.pwm_range') }}]"
+                                        {{--data-slider-ticks-labels='["0%", "100%"]'--}}
+                                        data-slider-min="0"
+                                        data-slider-max="{{ config('app.pwm_range') }}"
                                         data-slider-step="1"
                                         data-slider-value="{{ old('coldwhite') }}"
                                         data-slider-tooltip="show"
                                 >
+                                <span class="pull-left">0%</span>
+                                <span class="pull-right">100%</span>
                                 @if ($errors->has('coldwhite'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('coldwhite') }}</strong>
@@ -164,28 +174,33 @@
     <script>
         $("#red").slider({
             formatter: function(value) {
-                return value + '%';
-            }
+                return (value / 5) + '%';
+            },
+            focus: true
         });
         $("#green").slider({
             formatter: function(value) {
-                return value + '%';
-            }
+                return (value / 5) + '%';
+            },
+            focus: true
         });
         $("#blue").slider({
             formatter: function(value) {
-                return value + '%';
-            }
+                return (value / 5) + '%';
+            },
+            focus: true
         });
         $("#warmwhite").slider({
             formatter: function(value) {
-                return value + '%';
-            }
+                return (value / 5) + '%';
+            },
+            focus: true
         });
         $("#coldwhite").slider({
             formatter: function(value) {
-                return value + '%';
-            }
+                return (value / 5) + '%';
+            },
+            focus: true
         });
     </script>
 @endsection

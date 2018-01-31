@@ -66,11 +66,11 @@ class EntryRequest extends FormRequest
             {
                 return [
                     'time' => 'required|date_format:H:i',
-                    'red' => 'required|integer|min:0|max:100',
-                    'green' => 'required|integer|min:0|max:100',
-                    'blue' => 'required|integer|min:0|max:100',
-                    'warmwhite' => 'required|integer|min:0|max:100',
-                    'coldwhite' => 'required|integer|min:0|max:100',
+                    'red' => 'required|integer|min:0|max:500',
+                    'green' => 'required|integer|min:0|max:500',
+                    'blue' => 'required|integer|min:0|max:500',
+                    'warmwhite' => 'required|integer|min:0|max:500',
+                    'coldwhite' => 'required|integer|min:0|max:500',
                 ];
             }
             case 'PUT':
@@ -78,11 +78,11 @@ class EntryRequest extends FormRequest
             {
                 return [
                     'time' => 'required|date_format:H:i',
-                    'red' => 'required|integer|min:0|max:100',
-                    'green' => 'required|integer|min:0|max:100',
-                    'blue' => 'required|integer|min:0|max:100',
-                    'warmwhite' => 'required|integer|min:0|max:100',
-                    'coldwhite' => 'required|integer|min:0|max:100',
+                    'red' => 'required|integer|min:0|max:500',
+                    'green' => 'required|integer|min:0|max:500',
+                    'blue' => 'required|integer|min:0|max:500',
+                    'warmwhite' => 'required|integer|min:0|max:500',
+                    'coldwhite' => 'required|integer|min:0|max:500',
                 ];
             }
             default:break;

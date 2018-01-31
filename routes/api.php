@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,4 +27,6 @@ Route::middleware(['auth:api'])->group(function () {
     Route::get('/schedule/{id}', 'ScheduleController@show')->where([
         'id' => '[0-9]+',
     ]);
+
+    Route::post('/temperature', 'ApiController@logTemperature');
 });

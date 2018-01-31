@@ -233,4 +233,6 @@ return [
     'crossbar_http_bridge_caller_key' => env('CROSSBAR_HTTP_BRIDGE_CALLER_KEY', null),
     'crossbar_http_bridge_caller_secret' => env('CROSSBAR_HTTP_BRIDGE_CALLER_SECRET', null),
 
+    'pwm_range' => env('PWM_RANGE', 100),
+
 ];

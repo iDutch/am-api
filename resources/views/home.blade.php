@@ -28,18 +28,118 @@
                                         <div class="form-group">
                                             <label for="schedule" class="col-md-4 control-label">Time:</label>
                                             <div class="col-md-8">
-                                                <div class="btn-group">
-                                                    <button disabled style="width: 85px;" type="button" class="btn btn-default time"></button>
-                                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                        <span class="caret"></span><span class="sr-only">Toggle Dropdown</span>
-                                                    </button>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a class="cycle" data-speed="250" href="#">4x</a></li>
-                                                        <li><a class="cycle" data-speed="125" href="#">8x</a></li>
-                                                        <li><a class="cycle" data-speed="63" href="#">16x</a></li>
-                                                        <li><a class="cycle" data-speed="31" href="#">32x</a></li>
-                                                    </ul>
-                                                </div>
+                                                <button disabled style="width: 85px;" type="button" class="btn btn-default time"></button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="schedule" class="col-md-4 control-label">Channel values:</label>
+                                            <div class="col-md-8">
+                                                <button id="redLed" class="btn btn-danger" data-toggle="button"><i class="redLed"></i></button>
+                                                <button id="greenLed" class="btn btn-success" data-toggle="button"><i class="greenLed"></i></button>
+                                                <button id="blueLed" class="btn btn-primary" data-toggle="button"><i class="blueLed"></i></button>
+                                                <button id="wwhiteLed" class="btn btn-warning" data-toggle="button"><i class="wwhiteLed"></i></button>
+                                                <button id="cwhiteLed" class="btn btn-default" data-toggle="button"><i class="cwhiteLed"></i></button>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <input
+                                                        id="red"
+                                                        type="text"
+                                                        name="red"
+                                                        data-slider-id='redSlider'
+                                                        data-slider-ticks="[0, {{ config('app.pwm_range') }}]"
+                                                        {{--data-slider-ticks-labels='["0%", "100%"]'--}}
+                                                        data-slider-min="0"
+                                                        data-slider-max="{{ config('app.pwm_range') }}"
+                                                        data-slider-step="1"
+                                                        data-slider-value="0"
+                                                        data-slider-tooltip="show"
+                                                        data-slider-enabled="false"
+                                                >
+                                                <span class="pull-left">0%</span>
+                                                <span class="pull-right">100%</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <input
+                                                        id="green"
+                                                        type="text"
+                                                        name="green"
+                                                        data-slider-id='greenSlider'
+                                                        data-slider-ticks="[0, {{ config('app.pwm_range') }}]"
+                                                        {{--data-slider-ticks-labels='["0%", "100%"]'--}}
+                                                        data-slider-min="0"
+                                                        data-slider-max="{{ config('app.pwm_range') }}"
+                                                        data-slider-step="1"
+                                                        data-slider-value="0"
+                                                        data-slider-tooltip="show"
+                                                        data-slider-enabled="false"
+                                                >
+                                                <span class="pull-left">0%</span>
+                                                <span class="pull-right">100%</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <input
+                                                        id="blue"
+                                                        type="text"
+                                                        name="blue"
+                                                        data-slider-id='blueSlider'
+                                                        data-slider-ticks="[0, {{ config('app.pwm_range') }}]"
+                                                        {{--data-slider-ticks-labels='["0%", "100%"]'--}}
+                                                        data-slider-min="0"
+                                                        data-slider-max="{{ config('app.pwm_range') }}"
+                                                        data-slider-step="1"
+                                                        data-slider-value="0"
+                                                        data-slider-tooltip="show"
+                                                        data-slider-enabled="false"
+                                                        
+                                                >
+                                                <span class="pull-left">0%</span>
+                                                <span class="pull-right">100%</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <input
+                                                        id="wwhite"
+                                                        type="text"
+                                                        name="wwhite"
+                                                        data-slider-id='wwhiteSlider'
+                                                        data-slider-ticks="[0, {{ config('app.pwm_range') }}]"
+                                                        {{--data-slider-ticks-labels='["0%", "100%"]'--}}
+                                                        data-slider-min="0"
+                                                        data-slider-max="{{ config('app.pwm_range') }}"
+                                                        data-slider-step="1"
+                                                        data-slider-value="0"
+                                                        data-slider-tooltip="show"
+                                                        data-slider-enabled="false"
+                                                >
+                                                <span class="pull-left">0%</span>
+                                                <span class="pull-right">100%</span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <input
+                                                        id="cwhite"
+                                                        type="text"
+                                                        name="cwhite"
+                                                        data-slider-id='cwhiteSlider'
+                                                        data-slider-ticks="[0, {{ config('app.pwm_range') }}]"
+                                                        {{--data-slider-ticks-labels='["0%", "100%"]'--}}
+                                                        data-slider-min="0"
+                                                        data-slider-max="{{ config('app.pwm_range') }}"
+                                                        data-slider-step="1"
+                                                        data-slider-value="0"
+                                                        data-slider-tooltip="show"
+                                                        data-slider-enabled="false"
+                                                >
+                                                <span class="pull-left">0%</span>
+                                                <span class="pull-right">100%</span>
                                             </div>
                                         </div>
                                     </form>
@@ -56,7 +156,6 @@
 @endsection
 @section('scripts')
     <script>
-
         let user = 'App';
         let key = '789d0977830cb074909aebbd281845d65ca3b8052510911c73d317f5ab9c036a';
 
@@ -80,22 +179,103 @@
         });
 
         connection.onopen = function (session) {
+            let time = {};
+            let select = {};
+            let channelvalues = {};
+            let channelsliders = {};
             $('.device').each(function () {
-                var device_id = $(this).attr('id');
-                var time = $(this).find('.time');
-                var select = $(this).find('.schedule');
-                var cycle = $(this).find('.cycle');
-                cycle.on('click', function (e) {
-                   e.preventDefault();
-                   session.call('eu.hoogstraaten.fishtank.cycleschedule.'+ device_id, [$(this).data('speed')]);
-                });
-                select.on('change', function () {
+                let device_id = $(this).attr('id');
+                time[device_id] = $(this).find('.time');
+                select[device_id] = $(this).find('.schedule');
+                channelvalues[device_id] = {
+                    "redLed": $(this).find('.redLed'),
+                    "greenLed": $(this).find('.greenLed'),
+                    "blueLed": $(this).find('.blueLed'),
+                    "wwhiteLed": $(this).find('.wwhiteLed'),
+                    "cwhiteLed": $(this).find('.cwhiteLed'),
+                };
+                channelsliders[device_id] = {
+                    "redLed": $(this).find('#red'),
+                    "greenLed": $(this).find('#green'),
+                    "blueLed": $(this).find('#blue'),
+                    "wwhiteLed": $(this).find('#wwhite'),
+                    "cwhiteLed": $(this).find('#cwhite'),
+                };
+                select[device_id].on('change', function () {
                    session.call('eu.hoogstraaten.fishtank.setschedule.'+ device_id, [$(this).val()]);
                 });
                 session.subscribe('eu.hoogstraaten.fishtank.time.'+ device_id, function (args) {
-                    var t = window.moment(args[0]);
-                    time.html(t.format('HH:mm:ss'));
+                    let t = window.moment(args[0]);
+                    time[device_id].html(t.format('HH:mm:ss'));
                 });
+                session.subscribe('eu.hoogstraaten.fishtank.channelvalues.'+ device_id, function (args) {
+                    let data = args[0];
+                    for (let i in data) {
+                        channelvalues[device_id][i].html(parseInt(data[i]));
+                        channelsliders[device_id][i].data('slider').setValue(data[i]);
+                    }
+                });
+
+
+                $("#red").slider({
+                    formatter: function(value) {
+                        return (value / 5) + '%';
+                    },
+                    focus: true
+                }).on('slide', function () {
+                    session.call('eu.hoogstraaten.fishtank.setledvalue.'+ device_id, ['red', parseFloat($(this).val())]);
+                });
+
+                $("#green").slider({
+                    formatter: function(value) {
+                        return (value / 5) + '%';
+                    },
+                    focus: true
+                }).on('slide', function () {
+                    session.call('eu.hoogstraaten.fishtank.setledvalue.'+ device_id, ['green', parseFloat($(this).val())]);
+                });
+
+                $("#blue").slider({
+                    formatter: function(value) {
+                        return (value / 5) + '%';
+                    },
+                    focus: true
+                }).on('slide', function () {
+                    session.call('eu.hoogstraaten.fishtank.setledvalue.'+ device_id, ['blue', parseFloat($(this).val())]);
+                });
+
+                $("#wwhite").slider({
+                    formatter: function(value) {
+                        return (value / 5) + '%';
+                    },
+                    focus: true
+                }).on('slide', function () {
+                    session.call('eu.hoogstraaten.fishtank.setledvalue.'+ device_id, ['wwhite', parseFloat($(this).val())]);
+                });
+
+                $("#cwhite").slider({
+                    formatter: function(value) {
+                        return (value / 5) + '%';
+                    },
+                    focus: true
+                }).on('slide', function () {
+                    session.call('eu.hoogstraaten.fishtank.setledvalue.'+ device_id, ['cwhite', parseFloat($(this).val())]);
+                });
+
+                let toggles = {};
+                for (let i in channelvalues[device_id]) {
+                    toggles[i] = false;
+                    channelvalues[device_id][i].parent().on('click', function(e) {
+                        e.preventDefault();
+                        toggles[i] = !toggles[i];
+                        session.call('eu.hoogstraaten.fishtank.setchanneloverride.'+ device_id, [i, toggles[i]]);
+                        if (toggles[i]) {
+                            channelsliders[device_id][i].slider("enable").data('slider').setValue(parseFloat(channelvalues[device_id][i].html()));
+                        } else {
+                            channelsliders[device_id][i].slider("disable").data('slider').setValue(parseFloat(channelvalues[device_id][i].html()));
+                        }
+                    });
+                }
             });
         };
 
