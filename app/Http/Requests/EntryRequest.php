@@ -66,11 +66,11 @@ class EntryRequest extends FormRequest
             {
                 return [
                     'time' => 'required|date_format:H:i',
-                    'red' => 'required|integer|min:0|max:1000',
-                    'green' => 'required|integer|min:0|max:1000',
-                    'blue' => 'required|integer|min:0|max:1000',
-                    'warmwhite' => 'required|integer|min:0|max:1000',
-                    'coldwhite' => 'required|integer|min:0|max:1000',
+                    'red' => 'required|integer|min:0|max:' . config('app.pwm_range'),
+                    'green' => 'required|integer|min:0|max:' . config('app.pwm_range'),
+                    'blue' => 'required|integer|min:0|max:' . config('app.pwm_range'),
+                    'warmwhite' => 'required|integer|min:0|max:' . config('app.pwm_range'),
+                    'coldwhite' => 'required|integer|min:0|max:' . config('app.pwm_range'),
                 ];
             }
             case 'PUT':
@@ -78,11 +78,11 @@ class EntryRequest extends FormRequest
             {
                 return [
                     'time' => 'required|date_format:H:i',
-                    'red' => 'required|integer|min:0|max:1000',
-                    'green' => 'required|integer|min:0|max:1000',
-                    'blue' => 'required|integer|min:0|max:1000',
-                    'warmwhite' => 'required|integer|min:0|max:1000',
-                    'coldwhite' => 'required|integer|min:0|max:1000',
+                    'red' => 'required|integer|min:0|max:' . config('app.pwm_range'),
+                    'green' => 'required|integer|min:0|max:' . config('app.pwm_range'),
+                    'blue' => 'required|integer|min:0|max:' . config('app.pwm_range'),
+                    'warmwhite' => 'required|integer|min:0|max:' . config('app.pwm_range'),
+                    'coldwhite' => 'required|integer|min:0|max:' . config('app.pwm_range'),
                 ];
             }
             default:break;
