@@ -3,7 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\ScheduleChanged;
-use iDutch\CrossbarHttpBridge\HttpBridge\HttpBridge;
+use iDutch\CrossbarHttpBridge\HttpBridge\CrossbarHttpBridgeInterface;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -22,14 +22,12 @@ class PublishScheduleChanged
     /**
      * Handle the event.
      *
-     * @param  ScheduleChanged  $event
+     * @param ScheduleChanged $event
+     * @param CrossbarHttpBridgeInterface $crossbarHttpBridge
      * @return void
      */
-    public function handle(ScheduleChanged $event)
+    public function handle(ScheduleChanged $event, CrossbarHttpBridgeInterface $crossbarHttpBridge)
     {
-        $HttpBridge = new HttpBridge();
-        $publisher = $HttpBridge->createPublisher('https', 'cb.hoogstraaten.eu', 443, '/publish', config('app.crossbar_http_bridge_publisher_key'), config('app.crossbar_http_bridge_publisher_secret'), null, false);
-
-        $publisher->publish('eu.hoogstraaten.fishtank.publish', [['schedule_id' => $event->schedule->id]]);
+        $crossbarHttpBridge->publish('eu.hoogstraaten.fishtank.publish', [['schedule_id' => $event->schedule->id]]);
     }
 }
