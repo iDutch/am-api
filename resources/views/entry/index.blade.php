@@ -25,11 +25,11 @@
                                 <tr>
                                     <td><input class="check" type="checkbox" name="id[]" value="{{ $entry->id }}"></td>
                                     <td>{{ $entry->time->format('H:i') }}</td>
-                                    <td>{{ $entry->red / 5 }}%</td>
-                                    <td>{{ $entry->green / 5 }}%</td>
-                                    <td>{{ $entry->blue / 5 }}%</td>
-                                    <td>{{ $entry->warmwhite / 5 }}%</td>
-                                    <td>{{ $entry->coldwhite / 5 }}%</td>
+                                    <td>{{ $entry->red / (config('app.pwm_range') / 100) }}%</td>
+                                    <td>{{ $entry->green / (config('app.pwm_range') / 100) }}%</td>
+                                    <td>{{ $entry->blue / (config('app.pwm_range') / 100) }}%</td>
+                                    <td>{{ $entry->warmwhite / (config('app.pwm_range') / 100) }}%</td>
+                                    <td>{{ $entry->coldwhite / (config('app.pwm_range') / 100)  }}%</td>
                                     <td>
                                         <a class="btn btn-default" href="{{ route('entry.edit', ['schedule_id' => $schedule_id, 'id' => $entry->id]) }}">
                                             Edit

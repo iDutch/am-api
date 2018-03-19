@@ -10,6 +10,7 @@ use App\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class EntryController extends Controller
 {
@@ -22,9 +23,12 @@ class EntryController extends Controller
      */
     public function index(Request $request, $schedule_id)
     {
-        $entries = Entry::whereHas('schedule.user', function ($query) {
-            $query->where('user_id', Auth::id());
-        })->where('schedule_id', $schedule_id)->orderBy('time', 'asc')->get();
+        $expiresAt = now()->addDays(365);
+        $entries = Cache::remember('entries.' . $schedule_id, $expiresAt, function () use ($schedule_id) {
+            return Entry::whereHas('schedule.user', function ($query) {
+                $query->where('user_id', Auth::id());
+            })->where('schedule_id', $schedule_id)->orderBy('time', 'asc')->get();
+        });
 
         if ($request->ajax()) {
             return EntryResource::collection($entries);
@@ -63,6 +67,10 @@ class EntryController extends Controller
         $entry->coldwhite = $request->input('coldwhite');
         $entry->schedule()->associate($schedule);
         $entry->save();
+
+        Cache::forget('entries.' . $schedule_id);
+        Cache::forget('schedule.' . $schedule_id);
+
         event(new ScheduleChanged(Schedule::find($schedule_id)));
 
         return redirect(route('schedule.entries', ['schedule_id' => $schedule_id]));
@@ -113,6 +121,9 @@ class EntryController extends Controller
         $entry->save();
         event(new ScheduleChanged(Schedule::find($schedule_id)));
 
+        Cache::forget('entries.' . $schedule_id);
+        Cache::forget('schedule.' . $schedule_id);
+
         return redirect(route('schedule.entries', ['schedule_id' => $schedule_id]));
     }
 
@@ -127,6 +138,8 @@ class EntryController extends Controller
     {
         Entry::destroy($request->input('id'));
         event(new ScheduleChanged(Schedule::find($schedule_id)));
+
+        Cache::forget('entries.' . $schedule_id);
 
         return redirect(route('schedule.entries', ['schedule_id' => $schedule_id]));
     }

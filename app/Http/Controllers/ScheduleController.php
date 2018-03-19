@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ScheduleRequest;
 use App\Http\Resources\Schedule as ScheduleResource;
+use App\Http\Resources\ScheduleWithEntries as ScheduleWithEntriesResource;
 use App\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 
 class ScheduleController extends Controller
 {
@@ -18,7 +20,12 @@ class ScheduleController extends Controller
      */
     public function index(Request $request)
     {
-        $schedules =  Schedule::where('user_id', Auth::id())->get();
+
+        $expiresAt = now()->addDays(365);
+        $schedules = Cache::remember('schedules', $expiresAt, function () {
+            return Schedule::where('user_id', Auth::id())->get();
+        });
+
         if ($request->ajax()) {
             return ScheduleResource::collection($schedules);
         }
@@ -49,6 +56,8 @@ class ScheduleController extends Controller
         $schedule->user()->associate(Auth::user());
         $schedule->save();
 
+        Cache::forget('schedules');
+
         return redirect(route('schedule.index'));
     }
 
@@ -61,11 +70,14 @@ class ScheduleController extends Controller
      */
     public function show(ScheduleRequest $request, $id)
     {
-        $schedule = Schedule::with(['entries' => function ($query) {
-            $query->orderBy('time', 'asc');
-        }])->where('id', $id)->first();
+        $expiresAt = now()->addDays(365);
+        $schedule = Cache::remember('schedule.' . $id, $expiresAt, function () use ($id) {
+            return Schedule::with(['entries' => function ($query) {
+                $query->orderBy('time', 'asc');
+            }])->where('id', $id)->first();
+        });
 
-        return new ScheduleResource($schedule);
+        return new ScheduleWithEntriesResource($schedule);
     }
 
     /**
@@ -95,6 +107,9 @@ class ScheduleController extends Controller
         $schedule->name = $request->input('name');
         $schedule->save();
 
+        Cache::forget('schedule.' . $id);
+        Cache::forget('schedules');
+
         return redirect(route('schedule.index'));
     }
 
@@ -106,7 +121,11 @@ class ScheduleController extends Controller
      */
     public function destroy(ScheduleRequest $request)
     {
-        Schedule::destroy($request->input('id'));
+        $id = $request->input('id');
+        Schedule::destroy($id);
+
+        Cache::forget('schedule.' . $id);
+        Cache::forget('schedules');
 
         return redirect(route('schedule.index'));
     }

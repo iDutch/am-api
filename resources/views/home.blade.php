@@ -159,6 +159,9 @@
         let user = 'App';
         let key = '789d0977830cb074909aebbd281845d65ca3b8052510911c73d317f5ab9c036a';
 
+        let PWMRange = parseInt('{{ config('app.pwm_range') }}');
+        let percentFactor = PWMRange / 100;
+
         // This challenge callback will authenticate our frontend component
         function onchallenge (session, method, extra) {
             console.log("onchallenge", method, extra);
@@ -219,7 +222,7 @@
 
                 $("#red").slider({
                     formatter: function(value) {
-                        return (value / 5) + '%';
+                        return (value / percentFactor) + '%';
                     },
                     focus: true
                 }).on('slide', function () {
@@ -228,7 +231,7 @@
 
                 $("#green").slider({
                     formatter: function(value) {
-                        return (value / 5) + '%';
+                        return (value / percentFactor) + '%';
                     },
                     focus: true
                 }).on('slide', function () {
@@ -237,7 +240,7 @@
 
                 $("#blue").slider({
                     formatter: function(value) {
-                        return (value / 5) + '%';
+                        return (value / percentFactor) + '%';
                     },
                     focus: true
                 }).on('slide', function () {
@@ -246,7 +249,7 @@
 
                 $("#wwhite").slider({
                     formatter: function(value) {
-                        return (value / 5) + '%';
+                        return (value / percentFactor) + '%';
                     },
                     focus: true
                 }).on('slide', function () {
@@ -255,7 +258,7 @@
 
                 $("#cwhite").slider({
                     formatter: function(value) {
-                        return (value / 5) + '%';
+                        return (value / percentFactor) + '%';
                     },
                     focus: true
                 }).on('slide', function () {

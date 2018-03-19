@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;
 
-class Schedule extends Resource
+class ScheduleWithEntries extends Resource
 {
     /**
      * Transform the resource into an array.
@@ -17,6 +17,7 @@ class Schedule extends Resource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'entries' => Entry::collection($this->entries),
         ];
     }
 }

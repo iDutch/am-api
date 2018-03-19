@@ -172,33 +172,35 @@
 @endsection
 @section('scripts')
     <script>
+        let PWMRange = parseInt('{{ config('app.pwm_range') }}');
+        let percentFactor = PWMRange / 100;
         $("#red").slider({
             formatter: function(value) {
-                return (value / 5) + '%';
+                return (value / percentFactor) + '%';
             },
             focus: true
         });
         $("#green").slider({
             formatter: function(value) {
-                return (value / 5) + '%';
+                return (value / percentFactor) + '%';
             },
             focus: true
         });
         $("#blue").slider({
             formatter: function(value) {
-                return (value / 5) + '%';
+                return (value / percentFactor) + '%';
             },
             focus: true
         });
         $("#warmwhite").slider({
             formatter: function(value) {
-                return (value / 5) + '%';
+                return (value / percentFactor) + '%';
             },
             focus: true
         });
         $("#coldwhite").slider({
             formatter: function(value) {
-                return (value / 5) + '%';
+                return (value / percentFactor) + '%';
             },
             focus: true
         });
