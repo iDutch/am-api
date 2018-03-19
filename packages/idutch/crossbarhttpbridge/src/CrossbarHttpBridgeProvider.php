@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace iDutch\CrossbarHttpBridge;
 
 use iDutch\CrossbarHttpBridge\HttpBridge\CrossbarHttpBridgeClient;
 use GuzzleHttp\Client as GuzzleClient;
