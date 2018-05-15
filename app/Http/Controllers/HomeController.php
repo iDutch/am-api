@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Schedule;
-use iDutch\CrossbarHttpBridge\HttpBridge\CrossbarHttpBridgeInterface;
+use iDutch\CrossbarHttpBridge\CrossbarHttpBridgeInterface;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -25,7 +25,7 @@ class HomeController extends Controller
             $subscribers = $crossbarHttpBridge->call('wamp.subscription.list_subscribers', [$subscription['args'][0]]);
             foreach ($subscribers['args'][0] as $key => $subscriber) {
                 $clients[$key] = $crossbarHttpBridge->call('wamp.session.get', [$subscriber])['args'][0];
-                $clients[$key]['active_schedule_id'] = $Caller->call('eu.hoogstraaten.fishtank.getactivescheduleid.'. $subscriber)['args'][0];
+                $clients[$key]['active_schedule_id'] = $crossbarHttpBridge->call('eu.hoogstraaten.fishtank.getactivescheduleid.'. $subscriber)['args'][0];
             }
         }
         return view('home', ['clients' => $clients, 'schedules' => $schedules]);
