@@ -31,7 +31,7 @@ class EntryController extends Controller
         if ($request->ajax()) {
             return EntryResource::collection($entries);
         }
-        return view('entry.index', ['entries' => $entries, 'schedule' => $schedule->id]);
+        return view('entry.index', ['entries' => $entries, 'schedule' => $schedule]);
     }
 
     /**
@@ -40,7 +40,7 @@ class EntryController extends Controller
      */
     public function create(Schedule $schedule)
     {
-        return view('entry.create', ['schedule_id' => $schedule->id]);
+        return view('entry.create', ['schedule' => $schedule]);
     }
 
     /**
@@ -66,7 +66,7 @@ class EntryController extends Controller
 
         event(new ScheduleChanged($schedule));
 
-        return redirect(route('schedule.entries', ['schedule' => $schedule->id]));
+        return redirect(route('schedule.entries', ['schedule' => $schedule]));
     }
 
     /**
@@ -77,7 +77,7 @@ class EntryController extends Controller
      */
     public function edit(EntryRequest $request, Schedule $schedule, Entry $entry)
     {
-        return view('entry.edit', ['entry' => $entry->id, 'schedule' => $schedule->id]);
+        return view('entry.edit', ['entry' => $entry, 'schedule' => $schedule]);
     }
 
     /**
@@ -100,7 +100,7 @@ class EntryController extends Controller
         Cache::forget('entries.' . $schedule->id);
         Cache::forget('schedule.' . $schedule->id);
 
-        return redirect(route('schedule.entries', ['schedule_id' => $schedule->id]));
+        return redirect(route('schedule.entries', ['schedule' => $schedule]));
     }
 
     /**
@@ -115,6 +115,6 @@ class EntryController extends Controller
 
         Cache::forget('entries.' . $schedule->id);
 
-        return redirect(route('schedule.entries', ['schedule' => $schedule->id]));
+        return redirect(route('schedule.entries', ['schedule' => $schedule]));
     }
 }
