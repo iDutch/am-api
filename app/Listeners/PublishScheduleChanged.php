@@ -25,7 +25,7 @@ class PublishScheduleChanged
      * @param ScheduleChanged $event
      * @return Void
      */
-    public function handle(ScheduleChanged $event): Void
+    public function handle(ScheduleChanged $event): void
     {
         $this->crossbarHttpBridge->publish('eu.hoogstraaten.fishtank.publish', [['schedule_id' => $event->schedule->id]]);
     }
