@@ -158,7 +158,7 @@
                                     Save
                                 </button>
 
-                                <a class="btn btn-default" href="{{ route('schedule.entries', ['schedule_id' => $schedule_id]) }}">
+                                <a class="btn btn-default" href="{{ route('schedule.entries', ['schedule' => $schedule->id]) }}">
                                     Cancel
                                 </a>
                             </div>
