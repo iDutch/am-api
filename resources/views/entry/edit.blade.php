@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Edit entry</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('entry.update', ['schedule_id' => $schedule_id, 'id' => $entry->id]) }}">
+                    <form class="form-horizontal" method="POST" action="{{ route('entry.update', ['schedule' => $schedule->id, 'entry' => $entry->id]) }}">
                         {{ csrf_field() }}
                         {{ method_field('PATCH') }}
                         <div class="form-group{{ $errors->has('time') ? ' has-error' : '' }}">

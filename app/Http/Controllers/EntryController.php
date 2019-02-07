@@ -15,49 +15,42 @@ use Illuminate\Support\Facades\Cache;
 class EntryController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @param   Request $request
-     * @param   int     $schedule_id
-     * @return  \Illuminate\Http\Response|AnonymousResourceCollection
+     * @param Request $request
+     * @param Schedule $schedule
+     * @return \Illuminate\Contracts\View\Factory|AnonymousResourceCollection|\Illuminate\View\View
      */
-    public function index(Request $request, $schedule_id)
+    public function index(Request $request, Schedule $schedule)
     {
         $expiresAt = now()->addDays(365);
-        $entries = Cache::remember('entries.' . $schedule_id, $expiresAt, function () use ($schedule_id) {
+        $entries = Cache::remember('entries.' . $schedule->id, $expiresAt, function () use ($schedule) {
             return Entry::whereHas('schedule.user', function ($query) {
                 $query->where('user_id', Auth::id());
-            })->where('schedule_id', $schedule_id)->orderBy('time', 'asc')->get();
+            })->where('schedule_id', $schedule->id)->orderBy('time', 'asc')->get();
         });
 
         if ($request->ajax()) {
             return EntryResource::collection($entries);
         }
-        return view('entry.index', ['entries' => $entries, 'schedule_id' => $schedule_id]);
+        return view('entry.index', ['entries' => $entries, 'schedule' => $schedule->id]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @param   int $schedule_id
-     * @return  \Illuminate\Http\Response
+     * @param Schedule $schedule
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function create($schedule_id)
+    public function create(Schedule $schedule)
     {
-        return view('entry.create', ['schedule_id' => $schedule_id]);
+        return view('entry.create', ['schedule_id' => $schedule->id]);
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param   EntryRequest    $request
-     * @param   int             $schedule_id
-     * @return  \Illuminate\Http\Response
+     * @param EntryRequest $request
+     * @param Schedule $schedule
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function store(EntryRequest $request, $schedule_id)
+    public function store(EntryRequest $request, Schedule $schedule)
     {
         $entry = new Entry();
-        $schedule = Schedule::find($schedule_id);
 
         $entry->time = $request->input('time');
         $entry->red = $request->input('red');
@@ -68,50 +61,33 @@ class EntryController extends Controller
         $entry->schedule()->associate($schedule);
         $entry->save();
 
-        Cache::forget('entries.' . $schedule_id);
-        Cache::forget('schedule.' . $schedule_id);
+        Cache::forget('entries.' . $schedule->id);
+        Cache::forget('schedule.' . $schedule->id);
 
-        event(new ScheduleChanged(Schedule::find($schedule_id)));
+        event(new ScheduleChanged($schedule));
 
-        return redirect(route('schedule.entries', ['schedule_id' => $schedule_id]));
+        return redirect(route('schedule.entries', ['schedule' => $schedule->id]));
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param EntryRequest $request
+     * @param Schedule $schedule
+     * @param Entry $entry
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function show($id)
+    public function edit(EntryRequest $request, Schedule $schedule, Entry $entry)
     {
-
+        return view('entry.edit', ['entry' => $entry->id, 'schedule' => $schedule->id]);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param   EntryRequest    $request
-     * @param   int             $schedule_id
-     * @param   int             $id
-     * @return  \Illuminate\Http\Response
+     * @param EntryRequest $request
+     * @param Schedule $schedule
+     * @param Entry $entry
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function edit(EntryRequest $request, $schedule_id, $id)
+    public function update(EntryRequest $request, Schedule $schedule, Entry $entry)
     {
-        $entry = Entry::find($id);
-        return view('entry.edit', ['entry' => $entry, 'schedule_id' => $schedule_id]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param   EntryRequest $request
-     * @param   int     $schedule_id
-     * @param   int     $id
-     * @return  \Illuminate\Http\Response
-     */
-    public function update(EntryRequest $request, $schedule_id, $id)
-    {
-        $entry = Entry::find($id);
         $entry->time = $request->input('time');
         $entry->red = $request->input('red');
         $entry->green = $request->input('green');
@@ -119,28 +95,26 @@ class EntryController extends Controller
         $entry->warmwhite = $request->input('warmwhite');
         $entry->coldwhite = $request->input('coldwhite');
         $entry->save();
-        event(new ScheduleChanged(Schedule::find($schedule_id)));
+        event(new ScheduleChanged($schedule));
 
-        Cache::forget('entries.' . $schedule_id);
-        Cache::forget('schedule.' . $schedule_id);
+        Cache::forget('entries.' . $schedule->id);
+        Cache::forget('schedule.' . $schedule->id);
 
-        return redirect(route('schedule.entries', ['schedule_id' => $schedule_id]));
+        return redirect(route('schedule.entries', ['schedule_id' => $schedule->id]));
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param   EntryRequest $request
-     * @param   int     $schedule_id
-     * @return  \Illuminate\Http\Response
+     * @param EntryRequest $request
+     * @param Schedule $schedule
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function destroy(EntryRequest $request, $schedule_id)
+    public function destroy(EntryRequest $request, Schedule $schedule)
     {
         Entry::destroy($request->input('id'));
-        event(new ScheduleChanged(Schedule::find($schedule_id)));
+        event(new ScheduleChanged($schedule));
 
-        Cache::forget('entries.' . $schedule_id);
+        Cache::forget('entries.' . $schedule->id);
 
-        return redirect(route('schedule.entries', ['schedule_id' => $schedule_id]));
+        return redirect(route('schedule.entries', ['schedule' => $schedule->id]));
     }
 }

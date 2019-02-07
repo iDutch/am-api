@@ -31,7 +31,7 @@
                                     <td>{{ $entry->warmwhite / (config('app.pwm_range') / 100) }}%</td>
                                     <td>{{ $entry->coldwhite / (config('app.pwm_range') / 100)  }}%</td>
                                     <td>
-                                        <a class="btn btn-default" href="{{ route('entry.edit', ['schedule_id' => $schedule_id, 'id' => $entry->id]) }}">
+                                        <a class="btn btn-default" href="{{ route('entry.edit', ['schedule' => $schedule->id, 'entry' => $entry->id]) }}">
                                             Edit
                                         </a>
                                         <a class="delete btn btn-danger" href="#" data-id="{{ $entry->id }}">
@@ -44,7 +44,7 @@
                         <tfoot>
                             <tr>
                                 <td colspan="8">
-                                    <a class="btn btn-primary" href="{{ route('entry.create', ['schedule_id' => $schedule_id]) }}">
+                                    <a class="btn btn-primary" href="{{ route('entry.create', ['schedule' => $schedule->id]) }}">
                                         Add entry
                                     </a>
                                     <button disabled id="mass-delete" class="btn btn-danger pull-right">
@@ -64,7 +64,7 @@
     <div class="modal fade" id="deleteSingle" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form class="form-horizontal" method="POST" action="{{ route('entry.delete', ['schedule_id' => $schedule_id]) }}">
+                <form class="form-horizontal" method="POST" action="{{ route('entry.delete', ['schedule' => $schedule->id]) }}">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <input id="schedule-id" type="hidden" name="id">
@@ -88,7 +88,7 @@
     <div class="modal fade" id="deleteMulti" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <form class="form-horizontal" method="POST" action="{{ route('entry.delete', ['schedule_id' => $schedule_id]) }}">
+                <form class="form-horizontal" method="POST" action="{{ route('entry.delete', ['schedule' => $schedule->id]) }}">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
                     <div id="input-placeholder"></div>

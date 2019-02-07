@@ -7,7 +7,7 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Create entry</div>
                 <div class="panel-body">
-                    <form class="form-horizontal" method="POST" action="{{ route('entry.store', ['schedule_id' => $schedule_id]) }}">
+                    <form class="form-horizontal" method="POST" action="{{ route('entry.store', ['schedule' => $schedule->id]) }}">
                         {{ csrf_field() }}
 
                         <div class="form-group{{ $errors->has('time') ? ' has-error' : '' }}">

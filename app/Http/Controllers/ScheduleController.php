@@ -14,9 +14,8 @@ use Illuminate\Support\Facades\Cache;
 class ScheduleController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return  \Illuminate\Http\Response|AnonymousResourceCollection
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|AnonymousResourceCollection|\Illuminate\View\View
      */
     public function index(Request $request)
     {
@@ -34,9 +33,7 @@ class ScheduleController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return  \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function create()
     {
@@ -44,10 +41,8 @@ class ScheduleController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param   \App\Http\Requests\ScheduleRequest  $request
-     * @return  \Illuminate\Http\Response
+     * @param ScheduleRequest $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function store(ScheduleRequest $request)
     {
@@ -62,62 +57,51 @@ class ScheduleController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param   ScheduleRequest $request
-     * @param   int $id
-     * @return  ScheduleResource
+     * @param ScheduleRequest $request
+     * @param Schedule $schedule
+     * @return ScheduleWithEntriesResource
      */
-    public function show(ScheduleRequest $request, $id)
+    public function show(ScheduleRequest $request, Schedule $schedule)
     {
         $expiresAt = now()->addDays(365);
-        $schedule = Cache::remember('schedule.' . $id, $expiresAt, function () use ($id) {
-            return Schedule::with(['entries' => function ($query) {
+        $schedule = Cache::remember('schedule.' . $schedule->id, $expiresAt, function () use ($schedule) {
+            return $schedule->with(['entries' => function ($query) {
                 $query->orderBy('time', 'asc');
-            }])->where('id', $id)->first();
+            }]);
         });
 
         return new ScheduleWithEntriesResource($schedule);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param   ScheduleRequest  $request
-     * @param   int  $id
-     * @return  \Illuminate\Http\Response
+     * @param ScheduleRequest $request
+     * @param Schedule $schedule
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function edit(ScheduleRequest $request, $id)
+    public function edit(ScheduleRequest $request, Schedule $schedule)
     {
-        $schedule = new ScheduleResource(Schedule::where('id', $id)->first());
-
         return view('schedule.edit', ['schedule' => $schedule]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  ScheduleRequest  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param ScheduleRequest $request
+     * @param Schedule $schedule
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function update(ScheduleRequest $request, $id)
+    public function update(ScheduleRequest $request, Schedule $schedule)
     {
-        $schedule = Schedule::find($id);
         $schedule->name = $request->input('name');
         $schedule->save();
 
-        Cache::forget('schedule.' . $id);
+        Cache::forget('schedule.' . $schedule->id);
         Cache::forget('schedules');
 
         return redirect(route('schedule.index'));
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  ScheduleRequest  $request
-     * @return  \Illuminate\Http\Response
+     * @param ScheduleRequest $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function destroy(ScheduleRequest $request)
     {

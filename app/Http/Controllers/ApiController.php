@@ -13,16 +13,28 @@ use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
+    /**
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
     public function getCrossbarClients()
     {
         return CrossbarClientRecource::collection(CrossbarClient::where('user_id', Auth::id())->get());
     }
 
-    public function getSchedule(ScheduleRequest $request, $id)
+    /**
+     * @param ScheduleRequest $request
+     * @param $id
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function getSchedule(ScheduleRequest $request, Schedule $schedule)
     {
-        return ScheduleResource::collection(Schedule::find($id));
+        return ScheduleResource::collection($schedule);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function logTemperature(Request $request) {
         $temperature = new Temperature();
         $temperature->temperature = (float) $request->input('temperature');

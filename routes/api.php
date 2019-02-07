@@ -24,8 +24,8 @@ Route::middleware(['auth:api'])->group(function () {
     });
     Route::get('/crossbar/clients', 'ApiController@getCrossbarClients');
     Route::get('/schedules', 'ScheduleController@index');
-    Route::get('/schedule/{id}', 'ScheduleController@show')->where([
-        'id' => '[0-9]+',
+    Route::get('/schedule/{schedule}', 'ScheduleController@show')->where([
+        'schedule' => '[0-9]+',
     ]);
 
     Route::post('/temperature', 'ApiController@logTemperature');

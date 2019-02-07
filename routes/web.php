@@ -18,15 +18,15 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('schedule')->group(function () {
         Route::get('/create', 'ScheduleController@create')->name('schedule.create');
         Route::post('/', 'ScheduleController@store')->name('schedule.store');
-        Route::get('/edit/{id}', 'ScheduleController@edit')->where(['id' => '[0-9]+'])->name('schedule.edit');
-        Route::patch('/update/{id}', 'ScheduleController@update')->where(['id' => '[0-9]+'])->name('schedule.update');
+        Route::get('/edit/{schedule}', 'ScheduleController@edit')->where(['schedule' => '[0-9]+'])->name('schedule.edit');
+        Route::patch('/update/{schedule}', 'ScheduleController@update')->where(['schedule' => '[0-9]+'])->name('schedule.update');
         Route::delete('/', 'ScheduleController@destroy')->name('schedule.delete');
-        Route::get('/{id}/entries', 'EntryController@index')->where(['id' => '[0-9]+'])->name('schedule.entries');
-        Route::get('/{schedule_id}/entry/create', 'EntryController@create')->where(['schedule_id' => '[0-9]+'])->name('entry.create');
-        Route::post('/{schedule_id}/entry/', 'EntryController@store')->where(['schedule_id' => '[0-9]+'])->name('entry.store');
-        Route::get('/{schedule_id}/entry/edit/{id}', 'EntryController@edit')->where(['schedule_id' => '[0-9]+', 'id' => '[0-9]+'])->name('entry.edit');
-        Route::patch('/{schedule_id}/entry/update/{id}', 'EntryController@update')->where(['schedule_id' => '[0-9]+', 'id' => '[0-9]+'])->name('entry.update');
-        Route::delete('/{schedule_id}/entry/', 'EntryController@destroy')->where(['schedule_id' => '[0-9]+'])->name('entry.delete');
+        Route::get('/{schedule}/entries', 'EntryController@index')->where(['schedule' => '[0-9]+'])->name('schedule.entries');
+        Route::get('/{schedule}/entry/create', 'EntryController@create')->where(['schedule' => '[0-9]+'])->name('entry.create');
+        Route::post('/{schedule/entry/', 'EntryController@store')->where(['schedule' => '[0-9]+'])->name('entry.store');
+        Route::get('/{schedule}/entry/edit/{entry}', 'EntryController@edit')->where(['schedule' => '[0-9]+', 'entry' => '[0-9]+'])->name('entry.edit');
+        Route::patch('/{schedule}/entry/update/{entry}', 'EntryController@update')->where(['schedule' => '[0-9]+', 'entry' => '[0-9]+'])->name('entry.update');
+        Route::delete('/{schedule}/entry/', 'EntryController@destroy')->where(['schedule' => '[0-9]+'])->name('entry.delete');
     });
 });
 

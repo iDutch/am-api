@@ -23,10 +23,10 @@
                                     <td>{{ $schedule->name }}</td>
                                     <td>{{ $schedule->entries->count() }}</td>
                                     <td>
-                                        <a class="btn btn-info" href="{{ route('schedule.entries', ['schedule_id' => $schedule->id]) }}">
+                                        <a class="btn btn-info" href="{{ route('schedule.entries', ['schedule' => $schedule->id]) }}">
                                             Show entries
                                         </a>
-                                        <a class="btn btn-default" href="{{ route('schedule.edit', ['id' => $schedule->id]) }}">
+                                        <a class="btn btn-default" href="{{ route('schedule.edit', ['schedule' => $schedule->id]) }}">
                                             Edit
                                         </a>
                                         <a class="delete btn btn-danger" href="#" data-id="{{ $schedule->id }}">

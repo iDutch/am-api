@@ -17,7 +17,7 @@ class EntryRequest extends FormRequest
         switch($this->method()) {
             case 'GET':
             {
-                $entry = Entry::find($this->route('id'));
+                $entry = $this->route('entry');
                 return $entry && $this->user()->can('view', $entry);
             }
             case 'DELETE':
@@ -42,7 +42,7 @@ class EntryRequest extends FormRequest
             case 'PUT':
             case 'PATCH':
             {
-                $entry = Entry::find($this->route('id'));
+                $entry = $this->route('entry');
                 return $entry && $this->user()->can('update', $entry);
             }
             default:break;

@@ -17,7 +17,7 @@ class ScheduleRequest extends FormRequest
         switch($this->method()) {
             case 'GET':
             {
-                $schedule = Schedule::find($this->route('id'));
+                $schedule = $this->route('schedule');
                 return $schedule && $this->user()->can('view', $schedule);
             }
             case 'DELETE':
@@ -42,7 +42,7 @@ class ScheduleRequest extends FormRequest
             case 'PUT':
             case 'PATCH':
             {
-                $schedule = Schedule::find($this->route('id'));
+                $schedule = $this->route('schedule');
                 return $schedule && $this->user()->can('update', $schedule);
             }
             default:break;
