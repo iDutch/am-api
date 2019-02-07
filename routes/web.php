@@ -23,7 +23,7 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/', 'ScheduleController@destroy')->name('schedule.delete');
         Route::get('/{schedule}/entries', 'EntryController@index')->where(['schedule' => '[0-9]+'])->name('schedule.entries');
         Route::get('/{schedule}/entry/create', 'EntryController@create')->where(['schedule' => '[0-9]+'])->name('entry.create');
-        Route::post('/{schedule/entry/', 'EntryController@store')->where(['schedule' => '[0-9]+'])->name('entry.store');
+        Route::post('/{schedule}/entry/', 'EntryController@store')->where(['schedule' => '[0-9]+'])->name('entry.store');
         Route::get('/{schedule}/entry/edit/{entry}', 'EntryController@edit')->where(['schedule' => '[0-9]+', 'entry' => '[0-9]+'])->name('entry.edit');
         Route::patch('/{schedule}/entry/update/{entry}', 'EntryController@update')->where(['schedule' => '[0-9]+', 'entry' => '[0-9]+'])->name('entry.update');
         Route::delete('/{schedule}/entry/', 'EntryController@destroy')->where(['schedule' => '[0-9]+'])->name('entry.delete');
