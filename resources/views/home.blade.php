@@ -34,17 +34,17 @@
                                         <div class="form-group">
                                             <label for="schedule" class="col-md-4 control-label">Channel values:</label>
                                             <div class="col-md-8">
-                                                <button id="redLed" class="btn btn-danger" data-toggle="button"><i class="redLed"></i></button>
-                                                <button id="greenLed" class="btn btn-success" data-toggle="button"><i class="greenLed"></i></button>
-                                                <button id="blueLed" class="btn btn-primary" data-toggle="button"><i class="blueLed"></i></button>
-                                                <button id="wwhiteLed" class="btn btn-warning" data-toggle="button"><i class="wwhiteLed"></i></button>
-                                                <button id="cwhiteLed" class="btn btn-default" data-toggle="button"><i class="cwhiteLed"></i></button>
+                                                <button id="{{ $client['session'] }}redLed" class="btn btn-danger" data-toggle="button"><i class="redLed"></i></button>
+                                                <button id="{{ $client['session'] }}greenLed" class="btn btn-success" data-toggle="button"><i class="greenLed"></i></button>
+                                                <button id="{{ $client['session'] }}blueLed" class="btn btn-primary" data-toggle="button"><i class="blueLed"></i></button>
+                                                <button id="{{ $client['session'] }}wwhiteLed" class="btn btn-warning" data-toggle="button"><i class="wwhiteLed"></i></button>
+                                                <button id="{{ $client['session'] }}cwhiteLed" class="btn btn-default" data-toggle="button"><i class="cwhiteLed"></i></button>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <input
-                                                        id="red"
+                                                        id="{{ $client['session'] }}red"
                                                         type="text"
                                                         name="red"
                                                         data-slider-id='redSlider'
@@ -64,7 +64,7 @@
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <input
-                                                        id="green"
+                                                        id="{{ $client['session'] }}green"
                                                         type="text"
                                                         name="green"
                                                         data-slider-id='greenSlider'
@@ -84,7 +84,7 @@
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <input
-                                                        id="blue"
+                                                        id="{{ $client['session'] }}blue"
                                                         type="text"
                                                         name="blue"
                                                         data-slider-id='blueSlider'
@@ -105,7 +105,7 @@
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <input
-                                                        id="wwhite"
+                                                        id="{{ $client['session'] }}wwhite"
                                                         type="text"
                                                         name="wwhite"
                                                         data-slider-id='wwhiteSlider'
@@ -125,7 +125,7 @@
                                         <div class="form-group">
                                             <div class="col-md-12">
                                                 <input
-                                                        id="cwhite"
+                                                        id="{{ $client['session'] }}cwhite"
                                                         type="text"
                                                         name="cwhite"
                                                         data-slider-id='cwhiteSlider'
@@ -198,11 +198,11 @@
                     "cwhiteLed": $(this).find('.cwhiteLed'),
                 };
                 channelsliders[device_id] = {
-                    "redLed": $(this).find('#red'),
-                    "greenLed": $(this).find('#green'),
-                    "blueLed": $(this).find('#blue'),
-                    "wwhiteLed": $(this).find('#wwhite'),
-                    "cwhiteLed": $(this).find('#cwhite'),
+                    "redLed": $(this).find('#' + device_id + 'red'),
+                    "greenLed": $(this).find('#' + device_id + 'green'),
+                    "blueLed": $(this).find('#' + device_id + 'blue'),
+                    "wwhiteLed": $(this).find('#' + device_id + 'wwhite'),
+                    "cwhiteLed": $(this).find('#' + device_id + 'cwhite'),
                 };
                 select[device_id].on('change', function () {
                    session.call('eu.hoogstraaten.fishtank.setschedule.'+ device_id, [$(this).val()]);
@@ -220,7 +220,7 @@
                 });
 
 
-                $("#red").slider({
+                $("#" + device_id + "red").slider({
                     formatter: function(value) {
                         return (value / percentFactor) + '%';
                     },
@@ -229,7 +229,7 @@
                     session.call('eu.hoogstraaten.fishtank.setledvalue.'+ device_id, ['red', parseFloat($(this).val())]);
                 });
 
-                $("#green").slider({
+                $("#" + device_id + "green").slider({
                     formatter: function(value) {
                         return (value / percentFactor) + '%';
                     },
@@ -238,7 +238,7 @@
                     session.call('eu.hoogstraaten.fishtank.setledvalue.'+ device_id, ['green', parseFloat($(this).val())]);
                 });
 
-                $("#blue").slider({
+                $("#" + device_id + "blue").slider({
                     formatter: function(value) {
                         return (value / percentFactor) + '%';
                     },
@@ -247,7 +247,7 @@
                     session.call('eu.hoogstraaten.fishtank.setledvalue.'+ device_id, ['blue', parseFloat($(this).val())]);
                 });
 
-                $("#wwhite").slider({
+                $("#" + device_id + "wwhite").slider({
                     formatter: function(value) {
                         return (value / percentFactor) + '%';
                     },
@@ -256,7 +256,7 @@
                     session.call('eu.hoogstraaten.fishtank.setledvalue.'+ device_id, ['wwhite', parseFloat($(this).val())]);
                 });
 
-                $("#cwhite").slider({
+                $("#" + device_id + "cwhite").slider({
                     formatter: function(value) {
                         return (value / percentFactor) + '%';
                     },
