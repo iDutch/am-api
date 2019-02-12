@@ -67,7 +67,7 @@ class ScheduleController extends Controller
         $schedule = Cache::remember('schedule.' . $schedule->id, $expiresAt, function () use ($schedule) {
             return $schedule->with(['entries' => function ($query) {
                 $query->orderBy('time', 'asc');
-            }]);
+            }])->where('id', $schedule->id)->first();
         });
 
         return new ScheduleWithEntriesResource($schedule);

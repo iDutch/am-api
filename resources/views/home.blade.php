@@ -175,7 +175,7 @@
 
         let connection = new window.autobahn.Connection({
             url: 'wss://cb.hoogstraaten.eu/ws',
-            realm: 'eu.hoogstraaten.fishtank',
+            realm: 'eu.hoogstraaten',
             authid: user,
             authmethods: ["wampcra"],
             onchallenge: onchallenge
